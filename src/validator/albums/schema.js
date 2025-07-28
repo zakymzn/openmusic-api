@@ -8,14 +8,12 @@ const AlbumPayloadSchema = Joi.object({
   }),
   year: Joi.number()
     .integer()
-    .min(1900)
     .max(new Date().getFullYear())
     .required()
     .messages({
       "number.base": "Year must be a number",
       "number.integer": "Year must be an integer",
-      "number.min": "Year must be greater than or equal to 1900",
-      "number.max": `Year cannot be in the future`,
+      "number.max": "Year cannot be in the future",
       "any.required": "Year is required",
     }),
 });
