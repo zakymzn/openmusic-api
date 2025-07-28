@@ -3,8 +3,9 @@ const InvariantError = require("../../exceptions/InvariantError");
 const NotFoundError = require("../../exceptions/NotFoundError");
 
 class AlbumsService {
-  constructor() {
+  constructor(songsService) {
     this._albums = [];
+    this._songsService = songsService;
   }
 
   addAlbum({ name, year }) {
@@ -38,7 +39,19 @@ class AlbumsService {
       throw new NotFoundError("Album not found");
     }
 
-    return album;
+    const songs = this._songsService
+      .getSongs()
+      .filter((song) => song.albumId === id)
+      .map(({ id, title, performer }) => ({
+        id,
+        title,
+        performer,
+      }));
+
+    return {
+      ...album,
+      songs,
+    };
   }
 
   editAlbumById(id, { name, year }) {
