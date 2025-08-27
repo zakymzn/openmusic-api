@@ -49,20 +49,37 @@ class SongsHandler {
       return {
         status: "success",
         data: {
-          songs: songs.filter((song) => song.title.toLowerCase().includes(title.toLowerCase())).map((song) => ({
-            id: song.id,
-            title: song.title,
-            performer: song.performer,
-          })),
+          songs: songs
+            .filter((song) =>
+              song.title.toLowerCase().includes(title.toLowerCase()),
+            )
+            .map((song) => ({
+              id: song.id,
+              title: song.title,
+              performer: song.performer,
+            })),
         },
       };
-    }
-
-    if (performer) {
+    } else if (performer) {
       return {
         status: "success",
         data: {
-          songs: songs.filter((song) => song.performer.toLowerCase().includes(performer.toLowerCase())).map((song) => ({
+          songs: songs
+            .filter((song) =>
+              song.performer.toLowerCase().includes(performer.toLowerCase()),
+            )
+            .map((song) => ({
+              id: song.id,
+              title: song.title,
+              performer: song.performer,
+            })),
+        },
+      };
+    } else {
+      return {
+        status: "success",
+        data: {
+          songs: songs.map((song) => ({
             id: song.id,
             title: song.title,
             performer: song.performer,
@@ -70,17 +87,6 @@ class SongsHandler {
         },
       };
     }
-
-    return {
-      status: "success",
-      data: {
-        songs: songs.map((song) => ({
-          id: song.id,
-          title: song.title,
-          performer: song.performer
-        }))
-      },
-    };
   }
 
   async getSongByIdHandler(request) {
