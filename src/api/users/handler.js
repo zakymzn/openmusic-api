@@ -24,7 +24,7 @@ class UsersHandler {
     return response;
   }
 
-  async getUserByIdHandler(request, h) {
+  async getUserByIdHandler(request) {
     const { id } = request.params;
     const user = await this._service.getUserById(id);
 
@@ -32,6 +32,18 @@ class UsersHandler {
       status: 'success',
       data: {
         user,
+      },
+    };
+  }
+
+  async getUsersByUsernameHandler(request) {
+    const { username = '' } = request.query;
+    const users = await this._service.getUsersByUsername(username);
+
+    return {
+      status: 'success',
+      data: {
+        users,
       },
     };
   }
