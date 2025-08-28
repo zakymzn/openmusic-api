@@ -4,7 +4,7 @@ const routes = (handler) => [
     path: "/albums",
     handler: handler.postAlbumHandler,
     options: {
-      auth: 'opemusic_jwt',
+      auth: 'openmusic_jwt',
     },
   },
   {
@@ -12,7 +12,7 @@ const routes = (handler) => [
     path: "/albums",
     handler: handler.getAlbumsHandler,
     options: {
-      auth: 'opemusic_jwt',
+      auth: 'openmusic_jwt',
     },
   },
   {
@@ -20,7 +20,7 @@ const routes = (handler) => [
     path: "/albums/{id}",
     handler: handler.getAlbumByIdHandler,
     options: {
-      auth: 'opemusic_jwt',
+      auth: 'openmusic_jwt',
     },
   },
   {
