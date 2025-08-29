@@ -25,7 +25,8 @@ class AlbumsService {
   }
 
   async getAlbums() {
-    const result = await this._pool.query("SELECT * FROM albums");
+    const result = await this._pool.query("SELECT id, name, year FROM albums");
+
     return result.rows.map(mapDBToAlbumModel);
   }
 
