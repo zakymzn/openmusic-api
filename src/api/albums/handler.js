@@ -41,11 +41,7 @@ class AlbumsHandler {
     const { id } = request.params;
     const album = await this._albumsService.getAlbumById(id);
     const songs = await this._songsService.getSongs();
-    if (songs.length > 0) {
-      album.songs = songs.filter((song) => song.albumId === id);
-    } else {
-      album.songs = [];
-    }
+    album.songs = songs.filter((song) => song.albumId === id);
 
     return {
       status: "success",
