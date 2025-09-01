@@ -43,34 +43,14 @@ class SongsHandler {
 
   async getSongsHandler(request) {
     const { title, performer } = request.query;
-    const songs = await this._service.getSongs();
+    let songs = await this._service.getSongs();
 
     if (title) {
-      return {
-        status: "success",
-        data: {
-          songs: songs
-            .filter((song) => song.title.toLowerCase().includes(title.toLowerCase()))
-            .map((song) => ({
-              id: song.id,
-              title: song.title,
-              performer: song.performer,
-            })),
-        },
-      };
+      songs = songs.filter((song) => song.title.toLowerCase().includes(title.toLowerCase()));
     }
 
     if (performer) {
-      return {
-        status: "success",
-        data: {
-          songs: songs.filter((song) => song.performer.toLowerCase().includes(performer.toLowerCase())).map((song) => ({
-            id: song.id,
-            title: song.title,
-            performer: song.performer,
-          })),
-        },
-      };
+      songs = songs.filter((song) => song.performer.toLowerCase().includes(performer.toLowerCase()))
     }
 
     return {
