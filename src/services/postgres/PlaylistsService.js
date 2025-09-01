@@ -28,15 +28,32 @@ class PlaylistsService {
 
   async getPlaylists(owner) {
     const query = {
-      text: `SELECT playlists.* FROM playlists
+      text: `SELECT playlists.id, playlists.name, users.username FROM playlists
       LEFT JOIN collaborations ON collaborations.playlist_id = playlists.id
+      JOIN users ON playlists.owner = users.id
       WHERE playlists.owner = $1 OR collaborations.user_id = $1
-      GROUP BY playlists.id`,
+      GROUP BY playlists.id, users.username`,
       values: [owner],
     };
     const result = await this._pool.query(query);
 
     return result.rows.map(mapDBToPlaylistModel);
+  }
+
+  async getPlaylistById(id) {
+    const query = {
+      text: `SELECT playlists.*, users.username FROM playlists
+      JOIN users ON users.id = playlists.owner
+      WHERE playlists.id = $1`,
+      values: [id],
+    };
+    const result = await this._pool.query(query);
+
+    if (!result.rows.length) {
+      throw new NotFoundError('Playlist not found');
+    }
+
+    return result.rows.map(mapDBToPlaylistModel)[0];
   }
 
   async deletePlaylistById(id) {
@@ -52,6 +69,16 @@ class PlaylistsService {
   }
 
   async addSongToPlaylist(playlistId, songId) {
+    const songQuery = {
+      text: 'SELECT id FROM songs WHERE id = $1',
+      values: [songId],
+    };
+    const songResult = await this._pool.query(songQuery);
+
+    if (!songResult.rows.length) {
+      throw new NotFoundError('Song not found');
+    }
+
     const id = `playlistsong-${nanoid(16)}`;
     const query = {
       text: 'INSERT INTO playlist_songs VALUES($1, $2, $3) RETURNING id',
