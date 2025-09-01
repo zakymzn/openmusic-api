@@ -11,7 +11,7 @@ export const up = (pgm) => {
       notNull: true,
     },
     owner: {
-      type: 'TEXT',
+      type: 'VARCHAR(50)',
       notNull: true,
       references: '"users"',
       onDelete: 'CASCADE',
