@@ -19,6 +19,9 @@ const playlists = require('./api/playlists');
 const PlaylistsService = require('./services/postgres/PlaylistsService');
 const PlaylistsValidator = require('./validator/playlists');
 
+// playlist songs
+const PlaylistSongsValidator = require('./validator/playlistSongs');
+
 // users
 const users = require('./api/users');
 const UsersService = require('./services/postgres/UsersService');
@@ -95,7 +98,8 @@ const init = async () => {
       plugin: playlists,
       options: {
         service: playlistsService,
-        validator: PlaylistsValidator,
+        playlistsValidator: PlaylistsValidator,
+        playlistSongsValidator: PlaylistSongsValidator,
       },
     },
     {
