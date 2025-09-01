@@ -1,6 +1,6 @@
-export const shorthands = undefined;
+const shorthands = undefined;
 
-export const up = (pgm) => {
+const up = (pgm) => {
   pgm.createTable('authentications', {
     token: {
       type: 'TEXT',
@@ -9,6 +9,8 @@ export const up = (pgm) => {
   });
 };
 
-export const down = (pgm) => {
+const down = (pgm) => {
   pgm.dropTable('authentications');
 };
+
+module.exports = { shorthands, up, down };

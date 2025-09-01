@@ -1,6 +1,6 @@
-export const shorthands = undefined;
+const shorthands = undefined;
 
-export const up = (pgm) => {
+const up = (pgm) => {
   pgm.createTable('playlist_songs', {
     id: {
       type: 'VARCHAR(50)',
@@ -22,6 +22,8 @@ export const up = (pgm) => {
   pgm.addConstraint('playlist_songs', 'fk_playlist_songs.song_id_songs.id', 'FOREIGN KEY(song_id) REFERENCES songs(id) ON DELETE CASCADE');
 };
 
-export const down = (pgm) => {
+const down = (pgm) => {
   pgm.dropTable('playlist_songs');
 };
+
+module.exports = { shorthands, up, down };

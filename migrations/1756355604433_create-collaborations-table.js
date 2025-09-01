@@ -1,6 +1,6 @@
-export const shorthands = undefined;
+const shorthands = undefined;
 
-export const up = (pgm) => {
+const up = (pgm) => {
   pgm.createTable('collaborations', {
     id: {
       type: 'VARCHAR(50)',
@@ -22,6 +22,8 @@ export const up = (pgm) => {
   pgm.addConstraint('collaborations', 'fk_collaborations.user_id_users.id', 'FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE');
 };
 
-export const down = (pgm) => {
+const down = (pgm) => {
   pgm.dropTable('collaborations');
 };
+
+module.exports = { shorthands, up, down };
