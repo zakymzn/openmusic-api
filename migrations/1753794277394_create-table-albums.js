@@ -1,5 +1,3 @@
-const shorthands = undefined;
-
 const up = (pgm) => {
   pgm.createTable("albums", {
     id: {
@@ -21,4 +19,4 @@ const down = (pgm) => {
   pgm.dropTable("albums");
 };
 
-module.exports = { shorthands, up, down };
+module.exports = { up, down };
