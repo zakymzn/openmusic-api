@@ -13,10 +13,6 @@ class ExportsHandler {
     this._validator.validateExportPlaylistsPayload(request.payload);
 
     const { playlistId } = request.params;
-    // const message = {
-    //   userId: request.auth.credentials.id,
-    //   targetEmail: request.payload.targetEmail,
-    // };
     const { id: credentialId } = request.auth.credentials;
 
     await this._playlistsService.verifyPlaylistAccess(playlistId, credentialId);
