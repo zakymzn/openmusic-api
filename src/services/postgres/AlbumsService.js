@@ -79,6 +79,76 @@ class AlbumsService {
       throw new InvariantError('Failed to add cover album');
     }
   }
+
+  async addAlbumLikes(userId, albumId) {
+    const userQuery = {
+      text: 'SELECT id FROM users WHERE id = $1',
+      values: [userId],
+    };
+    const userResult = await this._pool.query(userQuery);
+
+    if (!userResult.rows.length) {
+      throw new NotFoundError('User not found');
+    }
+
+    const albumQuery = {
+      text: 'SELECT id FROM albums WHERE id = $1',
+      values: [albumId],
+    };
+    const albumResult = await this._pool.query(albumQuery);
+
+    if (!albumResult.rows.length) {
+      throw new NotFoundError('Album not found');
+    }
+
+    const userAlbumLikesQuery = {
+      text: 'SELECT * FROM user_album_likes WHERE user_id = $1 AND album_id = $2',
+      values: [userId, albumId],
+    };
+    const userAlbumLikesResult = await this._pool.query(userAlbumLikesQuery);
+
+    if (userAlbumLikesResult.rows.length > 0) {
+      throw new InvariantError('Album could not be liked more than once');
+    }
+
+    const id = `useralbumlikes-${nanoid(16)}`;
+    const query = {
+      text: 'INSERT INTO user_album_likes VALUES($1, $2, $3) RETURNING id',
+      values: [id, userId, albumId],
+    };
+    const result = await this._pool.query(query);
+
+    if (!result.rows.length) {
+      throw new InvariantError('Album could not be liked');
+    }
+
+    return result.rows;
+  }
+
+  async deleteAlbumLikes(userId, albumId) {
+    const query = {
+      text: 'DELETE FROM user_album_likes WHERE user_id = $1 AND album_id = $2 RETURNING id',
+      values: [userId, albumId],
+    };
+    const result = await this._pool.query(query);
+
+    if (!result.rows.length) {
+      throw new InvariantError('Album could not be unliked');
+    }
+  }
+
+  async getAlbumLikes(albumId) {
+    const query = {
+      text: `SELECT users.id, users.username
+      FROM users
+      JOIN user_album_likes ON users.id = user_album_likes.user_id
+      WHERE user_album_likes.album_id = $1`,
+      values: [albumId],
+    };
+    const result = await this._pool.query(query);
+
+    return result.rows;
+  }
 }
 
 module.exports = AlbumsService;
