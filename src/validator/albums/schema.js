@@ -2,19 +2,19 @@ const Joi = require('joi');
 
 const AlbumPayloadSchema = Joi.object({
   name: Joi.string().required().messages({
-    'string.base': 'Name must be a string',
-    'string.empty': 'Name cannot be empty',
-    'any.required': 'Name is required',
+    'string.base': 'Nama harus berupa string',
+    'string.empty': 'Nama tidak boleh kosong',
+    'any.required': 'Nama wajib diisi',
   }),
   year: Joi.number()
     .integer()
     .max(new Date().getFullYear())
     .required()
     .messages({
-      'number.base': 'Year must be a number',
-      'number.integer': 'Year must be an integer',
-      'number.max': 'Year cannot be in the future',
-      'any.required': 'Year is required',
+      'number.base': 'Tahun harus berupa angka',
+      'number.integer': 'Tahun harus berupa integer',
+      'number.max': 'Tahun tidak boleh berada di masa depan',
+      'any.required': 'Tahun wajib diisi',
     }),
 });
 

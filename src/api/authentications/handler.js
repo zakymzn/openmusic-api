@@ -56,7 +56,7 @@ class AuthenticationsHandler {
 
     return {
       status: 'success',
-      message: 'Refresh token successfully deleted',
+      message: 'Refresh token berhasil dihapus',
     }
   }
 }

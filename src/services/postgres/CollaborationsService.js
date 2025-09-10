@@ -16,7 +16,7 @@ class CollaborationsService {
     const userResult = await this._pool.query(userQuery);
 
     if (!userResult.rows.length) {
-      throw new NotFoundError('User not found');
+      throw new NotFoundError('Pengguna tidak ditemukan');
     }
 
     const id = `collab-${nanoid(16)}`;
@@ -27,7 +27,7 @@ class CollaborationsService {
     const result = await this._pool.query(query);
 
     if (!result.rows.length) {
-      throw new InvariantError('Collaboration could not be added');
+      throw new InvariantError('Kolaborasi tidak bisa ditambahkan');
     }
 
     return result.rows[0].id;
@@ -41,7 +41,7 @@ class CollaborationsService {
     const result = await this._pool.query(query);
 
     if (!result.rows.length) {
-      throw new InvariantError('Collaboration could not be deleted');
+      throw new InvariantError('Kolaborasi tidak bisa dihapus');
     }
   }
 
@@ -54,7 +54,7 @@ class CollaborationsService {
     const result = await this._pool.query(query);
 
     if (!result.rows.length) {
-      throw new InvariantError('Collaboration failed to verify');
+      throw new InvariantError('Kolaborasi gagal diverifikasi');
     }
   }
 }

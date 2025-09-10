@@ -178,7 +178,7 @@ const init = async () => {
 
       const newResponse = h.response({
         status: 'error',
-        message: 'Internal Server Error',
+        message: 'Kesalahan server internal',
       });
       newResponse.code(500);
       return newResponse;
@@ -188,7 +188,7 @@ const init = async () => {
   });
 
   await server.start();
-  console.log(`Server is running on ${server.info.uri}`);
+  console.log(`Server berjalan pada ${server.info.uri}`);
 };
 
 init();

@@ -2,38 +2,38 @@ const Joi = require('joi');
 
 const SongPayloadSchema = Joi.object({
   title: Joi.string().required().messages({
-    'string.base': 'Title must be a string',
-    'string.empty': 'Title cannot be empty',
-    'any.required': 'Title is required',
+    'string.base': 'Judul harus berupa string',
+    'string.empty': 'Judul tidak boleh kosong',
+    'any.required': 'Judul wajib diisi',
   }),
   year: Joi.number()
     .integer()
     .max(new Date().getFullYear())
     .required()
     .messages({
-      'number.base': 'Year must be a number',
-      'number.integer': 'Year must be an integer',
-      'number.max': 'Year cannot be in the future',
-      'any.required': 'Year is required',
+      'number.base': 'Tahun harus berupa angka',
+      'number.integer': 'Tahun harus berupa integer',
+      'number.max': 'Tahun tidak boleh berada di masa depan',
+      'any.required': 'Tahun wajib diisi',
     }),
   genre: Joi.string().required().messages({
-    'string.base': 'Genre must be a string',
-    'string.empty': 'Genre cannot be empty',
-    'any.required': 'Genre is required',
+    'string.base': 'Genre harus berupa string',
+    'string.empty': 'Genre tidak boleh kosong',
+    'any.required': 'Genre wajib diisi',
   }),
   performer: Joi.string().required().messages({
-    'string.base': 'Performer must be a string',
-    'string.empty': 'Performer cannot be empty',
-    'any.required': 'Performer is required',
+    'string.base': 'Performer harus berupa string',
+    'string.empty': 'Performer tidak boleh kosong',
+    'any.required': 'Performer wajib diisi',
   }),
   duration: Joi.number().integer().min(0).allow(null).messages({
-    'number.base': 'Duration must be a number',
-    'number.integer': 'Duration must be an integer',
-    'number.min': 'Duration cannot be negative',
+    'number.base': 'Durasi harus berupa angka',
+    'number.integer': 'Durasi harus berupa integer',
+    'number.min': 'Durasi tidak boleh negatif',
   }),
   albumId: Joi.string().allow(null).messages({
-    'string.base': 'Album ID must be a string',
-    'string.empty': 'Album ID cannot be empty',
+    'string.base': 'ID album harus berupa string',
+    'string.empty': 'ID album tidak boleh kosong',
   }),
 });
 

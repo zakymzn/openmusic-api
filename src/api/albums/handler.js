@@ -62,7 +62,7 @@ class AlbumsHandler {
 
     return {
       status: 'success',
-      message: 'Album successfully updated',
+      message: 'Album berhasil diperbarui',
     };
   }
 
@@ -73,7 +73,7 @@ class AlbumsHandler {
 
     return {
       status: 'success',
-      message: 'Album successfully deleted',
+      message: 'Album berhasil dihapus',
     };
   }
 
@@ -106,7 +106,7 @@ class AlbumsHandler {
 
     const response = h.response({
       status: 'success',
-      message: 'Album successfully liked',
+      message: 'Album berhasil disukai',
     });
 
     response.code(201);
@@ -122,7 +122,7 @@ class AlbumsHandler {
 
     return {
       status: 'success',
-      message: 'Album successfully unliked',
+      message: 'Album berhasil tidak disukai',
     };
   }
 

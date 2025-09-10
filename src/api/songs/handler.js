@@ -62,7 +62,7 @@ class SongsHandler {
 
     return {
       status: 'success',
-      message: 'Song successfully updated',
+      message: 'Lagu berhasil diperbarui',
     };
   }
 
@@ -73,7 +73,7 @@ class SongsHandler {
 
     return {
       status: 'success',
-      message: 'Song successfully deleted',
+      message: 'Lagu berhasil dihapus',
     };
   }
 }

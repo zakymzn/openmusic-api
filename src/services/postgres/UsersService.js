@@ -25,7 +25,7 @@ class UsersService {
     const result = await this._pool.query(query);
 
     if (!result.rows.length) {
-      throw new InvariantError('Failed to add user');
+      throw new InvariantError('Gagal menambahkan pengguna');
     }
 
     return result.rows[0].id;
@@ -40,7 +40,7 @@ class UsersService {
     const result = await this._pool.query(query);
 
     if (!result.rows.length) {
-      throw new NotFoundError('User not found');
+      throw new NotFoundError('Pengguna tidak ditemukan');
     }
 
     return result.rows[0];
@@ -65,7 +65,7 @@ class UsersService {
     const result = await this._pool.query(query);
 
     if (result.rows.length > 0) {
-      throw new InvariantError('Failed to add user. Username already exists.');
+      throw new InvariantError('Gagal menambahkan pengguna. Nama pengguna sudah ada.');
     }
   }
 
@@ -78,14 +78,14 @@ class UsersService {
     const result = await this._pool.query(query);
 
     if (!result.rows.length) {
-      throw new AuthenticationError('Credential that you provided is invalid');
+      throw new AuthenticationError('Kredensial yang Anda berikan tidak valid');
     }
 
     const { id, password: hashedPassword } = result.rows[0];
     const match = await bcrypt.compare(password, hashedPassword);
 
     if (!match) {
-      throw new AuthenticationError('Credential that you provided is invalid');
+      throw new AuthenticationError('Kredensial yang Anda berikan tidak valid');
     }
 
     return id;

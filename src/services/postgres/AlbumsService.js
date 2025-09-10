@@ -19,7 +19,7 @@ class AlbumsService {
     const result = await this._pool.query(query);
 
     if (!result.rows[0].id) {
-      throw new InvariantError('Failed to add album');
+      throw new InvariantError('Gagal menambahkan album');
     }
 
     return result.rows[0].id;
@@ -39,7 +39,7 @@ class AlbumsService {
     const result = await this._pool.query(query);
 
     if (!result.rows.length) {
-      throw new NotFoundError('Album not found');
+      throw new NotFoundError('Album tidak ditemukan');
     }
 
     return result.rows.map(mapDBToAlbumModel)[0];
@@ -53,7 +53,7 @@ class AlbumsService {
     const result = await this._pool.query(query);
 
     if (!result.rows.length) {
-      throw new NotFoundError('Failed to update album. Id not found');
+      throw new NotFoundError('Gagal memperbarui album. Album tidak ditemukan.');
     }
   }
 
@@ -65,7 +65,7 @@ class AlbumsService {
     const result = await this._pool.query(query);
 
     if (!result.rows.length) {
-      throw new NotFoundError('Failed to delete album. Id not found');
+      throw new NotFoundError('Gagal menghapus album. Album tidak ditemukan.');
     }
   }
 
@@ -77,7 +77,7 @@ class AlbumsService {
     const result = await this._pool.query(query);
 
     if (!result.rows.length) {
-      throw new InvariantError('Failed to add cover album');
+      throw new InvariantError('Gagal menambahkan sampul album');
     }
   }
 
@@ -89,7 +89,7 @@ class AlbumsService {
     const userResult = await this._pool.query(userQuery);
 
     if (!userResult.rows.length) {
-      throw new NotFoundError('User not found');
+      throw new NotFoundError('Pengguna tidak ditemukan');
     }
 
     const albumQuery = {
@@ -99,7 +99,7 @@ class AlbumsService {
     const albumResult = await this._pool.query(albumQuery);
 
     if (!albumResult.rows.length) {
-      throw new NotFoundError('Album not found');
+      throw new NotFoundError('Album tidak ditemukan');
     }
 
     const userAlbumLikesQuery = {
@@ -109,7 +109,7 @@ class AlbumsService {
     const userAlbumLikesResult = await this._pool.query(userAlbumLikesQuery);
 
     if (userAlbumLikesResult.rows.length > 0) {
-      throw new InvariantError('Album could not be liked more than once');
+      throw new InvariantError('Album tidak bisa disukai lebih dari satu kali');
     }
 
     const id = `useralbumlikes-${nanoid(16)}`;
@@ -120,7 +120,7 @@ class AlbumsService {
     const result = await this._pool.query(query);
 
     if (!result.rows.length) {
-      throw new InvariantError('Album could not be liked');
+      throw new InvariantError('Album tidak bisa disukai');
     }
 
     await this._cacheService.delete(`albums:${albumId}`);
@@ -136,7 +136,7 @@ class AlbumsService {
     const result = await this._pool.query(query);
 
     if (!result.rows.length) {
-      throw new InvariantError('Album could not be unliked');
+      throw new InvariantError('Album tidak bisa dibatalkan suka');
     }
 
     await this._cacheService.delete(`albums:${albumId}`);
