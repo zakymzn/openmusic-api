@@ -1,4 +1,4 @@
-const autoBind = require("auto-bind");
+const autoBind = require('auto-bind');
 const config = require('../../utils/config');
 
 class AlbumsHandler {
@@ -17,7 +17,7 @@ class AlbumsHandler {
 
     const albumId = await this._albumsService.addAlbum(request.payload);
     const response = h.response({
-      status: "success",
+      status: 'success',
       data: {
         albumId,
       },
@@ -32,7 +32,7 @@ class AlbumsHandler {
     const albums = await this._albumsService.getAlbums();
 
     return {
-      status: "success",
+      status: 'success',
       data: {
         albums,
       },
@@ -46,7 +46,7 @@ class AlbumsHandler {
     album.songs = songs;
 
     return {
-      status: "success",
+      status: 'success',
       data: {
         album,
       },
@@ -61,8 +61,8 @@ class AlbumsHandler {
     await this._albumsService.editAlbumById(id, request.payload);
 
     return {
-      status: "success",
-      message: "Album successfully updated",
+      status: 'success',
+      message: 'Album successfully updated',
     };
   }
 
@@ -72,8 +72,8 @@ class AlbumsHandler {
     await this._albumsService.deleteAlbumById(id);
 
     return {
-      status: "success",
-      message: "Album successfully deleted",
+      status: 'success',
+      message: 'Album successfully deleted',
     };
   }
 

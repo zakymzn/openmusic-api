@@ -1,4 +1,4 @@
-const autoBind = require("auto-bind");
+const autoBind = require('auto-bind');
 
 class SongsHandler {
   constructor(service, validator) {
@@ -14,7 +14,7 @@ class SongsHandler {
     const songId = await this._service.addSong(request.payload);
 
     const response = h.response({
-      status: "success",
+      status: 'success',
       data: {
         songId,
       },
@@ -30,7 +30,7 @@ class SongsHandler {
     const songs = await this._service.getSongs({ title, performer });
 
     return {
-      status: "success",
+      status: 'success',
       data: {
         songs: songs.map((song) => ({
           id: song.id,
@@ -46,7 +46,7 @@ class SongsHandler {
     const song = await this._service.getSongById(id);
 
     return {
-      status: "success",
+      status: 'success',
       data: {
         song,
       },
@@ -61,8 +61,8 @@ class SongsHandler {
     await this._service.editSongById(id, request.payload);
 
     return {
-      status: "success",
-      message: "Song successfully updated",
+      status: 'success',
+      message: 'Song successfully updated',
     };
   }
 
@@ -72,8 +72,8 @@ class SongsHandler {
     await this._service.deleteSongById(id);
 
     return {
-      status: "success",
-      message: "Song successfully deleted",
+      status: 'success',
+      message: 'Song successfully deleted',
     };
   }
 }

@@ -1,21 +1,21 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const Hapi = require("@hapi/hapi");
+const Hapi = require('@hapi/hapi');
 const Jwt = require('@hapi/jwt');
 const Inert = require('@hapi/inert');
-const ClientError = require("./exceptions/ClientError");
+const ClientError = require('./exceptions/ClientError');
 const config = require('./utils/config');
 const path = require('path');
 
 // albums
-const albums = require("./api/albums");
-const AlbumsService = require("./services/postgres/AlbumsService");
-const AlbumsValidator = require("./validator/albums");
+const albums = require('./api/albums');
+const AlbumsService = require('./services/postgres/AlbumsService');
+const AlbumsValidator = require('./validator/albums');
 
 // songs
-const songs = require("./api/songs");
-const SongsService = require("./services/postgres/SongsService");
-const SongsValidator = require("./validator/songs");
+const songs = require('./api/songs');
+const SongsService = require('./services/postgres/SongsService');
+const SongsValidator = require('./validator/songs');
 
 // playlists
 const playlists = require('./api/playlists');
@@ -47,7 +47,7 @@ const ProducerService = require('./services/rabbitmq/ProducerService');
 const ExportsValidator = require('./validator/exports');
 
 // albums cover
-const ImagesValidator = require("./validator/images");
+const ImagesValidator = require('./validator/images');
 const StorageService = require('./services/storage/StorageService');
 
 // cache
@@ -68,7 +68,7 @@ const init = async () => {
     host: config.app.host,
     routes: {
       cors: {
-        origin: ["*"],
+        origin: ['*'],
       },
     },
   });
@@ -158,13 +158,13 @@ const init = async () => {
     },
   ]);
 
-  server.ext("onPreResponse", (request, h) => {
+  server.ext('onPreResponse', (request, h) => {
     const { response } = request;
 
     if (response instanceof Error) {
       if (response instanceof ClientError) {
         const newResponse = h.response({
-          status: "fail",
+          status: 'fail',
           message: response.message,
         });
 
@@ -177,8 +177,8 @@ const init = async () => {
       }
 
       const newResponse = h.response({
-        status: "error",
-        message: "Internal Server Error",
+        status: 'error',
+        message: 'Internal Server Error',
       });
       newResponse.code(500);
       return newResponse;
