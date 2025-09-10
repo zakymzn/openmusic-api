@@ -27,7 +27,7 @@ const up = (pgm) => {
     album_id: {
       type: 'VARCHAR(50)',
       notNull: false,
-      references: ''albums'',
+      references: "'albums'",
       onDelete: 'CASCADE',
     },
   });
