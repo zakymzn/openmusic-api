@@ -5,8 +5,9 @@ const InvariantError = require("../../exceptions/InvariantError");
 const NotFoundError = require("../../exceptions/NotFoundError");
 
 class AlbumsService {
-  constructor() {
+  constructor(cacheService) {
     this._pool = new Pool();
+    this._cacheService = cacheService;
   }
 
   async addAlbum({ name, year }) {
@@ -122,6 +123,8 @@ class AlbumsService {
       throw new InvariantError('Album could not be liked');
     }
 
+    await this._cacheService.delete(`albums:${albumId}`);
+
     return result.rows;
   }
 
@@ -135,19 +138,35 @@ class AlbumsService {
     if (!result.rows.length) {
       throw new InvariantError('Album could not be unliked');
     }
+
+    await this._cacheService.delete(`albums:${albumId}`);
   }
 
   async getAlbumLikes(albumId) {
-    const query = {
-      text: `SELECT users.id, users.username
-      FROM users
-      JOIN user_album_likes ON users.id = user_album_likes.user_id
-      WHERE user_album_likes.album_id = $1`,
-      values: [albumId],
-    };
-    const result = await this._pool.query(query);
+    try {
+      const result = await this._cacheService.get(`albums:${albumId}`);
 
-    return result.rows;
+      return {
+        result: JSON.parse(result),
+        fromCache: true,
+      };
+    } catch {
+      const query = {
+        text: `SELECT users.id, users.username
+        FROM users
+        JOIN user_album_likes ON users.id = user_album_likes.user_id
+        WHERE user_album_likes.album_id = $1`,
+        values: [albumId],
+      };
+      const result = await this._pool.query(query);
+
+      await this._cacheService.set(`albums:${albumId}`, JSON.stringify(result.rows));
+
+      return {
+        result: result.rows,
+        fromCache: false,
+      };
+    }
   }
 }
 
